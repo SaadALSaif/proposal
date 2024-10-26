@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposal</title>
+    <style>
+        body {
+            background-color: #ffe4e1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            font-family: Arial, sans-serif;
+            color: #333;
+            text-align: center;
+        }
+        #message {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+        .button {
+            font-size: 1.2em;
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: none;
+        }
+        #yesButton {
+            background-color: #ff1493;
+            color: white;
+        }
+        #noButton {
+            background-color: #ff6347;
+            color: white;
+        }
+        .firework, .flower {
+            position: absolute;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div id="message">Do you love me?</div>
+    <button id="yesButton" class="button" onclick="showLoveMessage()">Yes</button>
+    <button id="noButton" class="button" onmouseover="moveNoButton()">No</button>
+
+    <script>
+        const message = document.getElementById("message");
+        const yesButton = document.getElementById("yesButton");
+        const noButton = document.getElementById("noButton");
+
+        function showLoveMessage() {
+            message.textContent = "Saad also loves you ❤️!\n“Every moment spent with you is like a beautiful dream come true.”";
+            setTimeout(() => askMarriageQuestion(), 2000);
+        }
+
+        function askMarriageQuestion() {
+            message.textContent = "Will you marry me?";
+            noButton.style.display = "none";  // Hide No button
+            yesButton.onclick = startCelebration;
+        }
+
+        function moveNoButton() {
+            const x = Math.random() * (window.innerWidth - noButton.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noButton.offsetHeight);
+            noButton.style.transform = `translate(${x}px, ${y}px)`;
+        }
+
+        function startCelebration() {
+            message.textContent = "Congratulations on choosing Saad as a life partner! 🎉💖";
+            yesButton.style.display = "none";  // Hide Yes button
+            createFireworks();
+            createFlowerRain();
+        }
+
+        function createFireworks() {
+            for (let i = 0; i < 20; i++) {
+                const firework = document.createElement("div");
+                firework.className = "firework";
+                firework.style.width = firework.style.height = `${Math.random() * 10 + 5}px`;
+                firework.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                document.body.appendChild(firework);
+
+                firework.style.left = `${window.innerWidth / 2}px`;
+                firework.style.top = `${window.innerHeight / 2}px`;
+
+                const angle = Math.random() * 2 * Math.PI;
+                const distance = Math.random() * 150 + 50;
+                const x = Math.cos(angle) * distance;
+                const y = Math.sin(angle) * distance;
+
+                firework.animate([
+                    { transform: `translate(0, 0)` },
+                    { transform: `translate(${x}px, ${y}px)` }
+                ], { duration: 1000, easing: "ease-out" });
+
+                setTimeout(() => firework.remove(), 1000);
+            }
+        }
+
+        function createFlowerRain() {
+            for (let i = 0; i < 30; i++) {
+                const flower = document.createElement("div");
+                flower.className = "flower";
+                flower.style.width = flower.style.height = `${Math.random() * 15 + 10}px`;
+                flower.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                document.body.appendChild(flower);
+
+                const x = Math.random() * window.innerWidth;
+                flower.style.left = `${x}px`;
+                flower.style.top = `-20px`;
+
+                flower.animate([
+                    { transform: `translateY(0px)` },
+                    { transform: `translateY(${window.innerHeight + 50}px)` }
+                ], { duration: Math.random() * 2000 + 3000, easing: "ease-in" });
+
+                setTimeout(() => flower.remove(), 5000);
+            }
+        }
+    </script>
+</body>
+</html>
